@@ -5,13 +5,6 @@
     <div class="d-flex justify-content-end mt-3">
         <a [routerLink]="['/admin/predmeti/dodaj']" class="btn btn-primary">Dodaj predmet</a>
     </div>
-
-    <!--
-    // U HTML-u, pomoću async pipe-a pretplaćujemo se na listu (koja je Observable) i čekamo promene.
-    // Async pipe omogućava komponenti da se automatski pretplati na listu i prikaže nove podatke čim stignu.
-    // To znači da HTML može pratiti promene u listi, bez dodatnog koda za pretplatu i otkazivanje pretplate.
-    //async pipe se automatski unsubsrcibe sa liste koja je observable bez da ja to moram raditi
-    -->
     <ng-container *ngIf="subjects$ | async as subjects">
 
         <table class="table table-bordered mt-3">
