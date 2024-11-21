@@ -81,7 +81,7 @@ export class UpdateLessonComponent implements OnInit, OnDestroy {
   }
 
   onFormSubmit() : void {
-    if(this.lesson && this.lessonId) { //Dodati logiku jos ?
+    if(this.lesson && this.lessonId) {
       const updateLessonRequestFormData = new FormData();
       updateLessonRequestFormData.append('title', this.lesson.title);
       updateLessonRequestFormData.append('description', this.lesson.description);
