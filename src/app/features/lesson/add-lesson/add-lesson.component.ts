@@ -46,8 +46,7 @@ export class AddLessonComponent implements OnInit , OnDestroy{
 
   onFormSubmit() : void {
     if(this.addLessonRequest.videoFile) {
-      const formDataAddLessonRequest = new FormData(); //Sluzi za slanje razlicitih tipova podataka gdje se ukljucuje i binarcni podaci kao što su slike i videa
-      //u taj objekt dodajem sve što zelim prebaciti na backend kao append metoda i onda taj objekt šaljem backendu
+      const formDataAddLessonRequest = new FormData();
       formDataAddLessonRequest.append('title', this.addLessonRequest.title);
       formDataAddLessonRequest.append('description', this.addLessonRequest.description);
       formDataAddLessonRequest.append('videoFile', this.addLessonRequest.videoFile);
@@ -72,22 +71,17 @@ export class AddLessonComponent implements OnInit , OnDestroy{
     });
   }
 
-  //Event se šalje iz html jer to zapravo i je html kada korisnik odabere video
-  //i event sadrži informacije o odabranom file-u
   onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement; //event.target predstavlja html element koji je izazvao ovaj dogadaj u ovom slucaju je to bio file (<input type="file")
-    //znaci element u html file za dodavanje videa je izazvao ovaj dogadaj i sada ga ja castam as HTMLInputElement
-    //kako bi oznacio da je input tipa podataka HTMLInputElement kako bi mogli pristupiti podaci koje ima taj dodani file
+    const input = event.target as HTMLInputElement;
 
-    if (input.files && input.files.length > 0) { //Ako je file odabran odnosno ako nije null ii ako je file veci od 0, znaci da je datoteka odabrana 
-      this.addLessonRequest.videoFile = input.files[0]; // u objekt addVideoRequest spremi file (Uzima se prva (i u ovom slučaju jedina) datoteka koju je korisnik odabrao.)
-      const reader = new FileReader();//Kreiraj reader koji ce mi pomoci citati sadrzaj datoteke
+    if (input.files && input.files.length > 0) {
+      this.addLessonRequest.videoFile = input.files[0];
+      const reader = new FileReader();
 
       
-      reader.readAsDataURL(input.files[0]); //sa pomoc reader-a procitaj sve iz datoteke
-      //Kad završi učitavanje
-      reader.onload = (e: any) => { //Kada reader procita sve do kraja, e je objekt koji sadrži informacije o završetku učitavanja
-        this.selectedLessonVideoFileUrl = e.target.result; //postavi mi URL koji prestavlja sadržaj videa
+      reader.readAsDataURL(input.files[0]);
+      reader.onload = (e: any) => {
+        this.selectedLessonVideoFileUrl = e.target.result;
       };
     }
   }
