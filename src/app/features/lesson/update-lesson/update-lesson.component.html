@@ -1,0 +1,90 @@
+<div class="container">
+
+    <h1 class="mt-3">Uredi lekciju</h1>
+
+    <ng-container *ngIf="lesson;else notFound">
+
+        <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+
+            <div class="mt-2">
+
+                <div class="mt-3">
+                    <label class="form-label" for="lessonId">Video Id</label>
+                    <input type="text" disabled id="lessonId" class="form-control" name="lessonId" value="{{lesson.id}}">
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label" for="lessonTitle">Video Naslov</label>
+                    <input type="text" id="lessonTitle" class="form-control" name="lessonTitle" [(ngModel)]="lesson.title">
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label" for="lessonDescription">Video Opis</label>
+                    <input type="text" id="lessonDescription" class="form-control" name="lessonDescription"
+                        [(ngModel)]="lesson.description">
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label" for="videoFileUrl">Video Url</label>
+                    <input type="text" id="videoFileUrl" class="form-control" name="videoFileUrl"
+                        [(ngModel)]="lesson.videoFileUrl">
+                </div>
+
+                <div class="mt-3">
+                    <label class="form-label">Pregled videa</label>
+                    <div class="video-container">
+                      <video width="200" controls *ngIf="selectedVideoFileUrl">
+                        <source [src]="selectedVideoFileUrl" type="video/mp4">
+                        Vaš preglednik ne podržava HTML video tag.
+                      </video>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-3">
+                    <label class="form-label" for="newVideoFile">Odaberi novi video</label>
+                    <input type="file" id="newVideoFile" class="form-control" (change)="onFileSelected($event)" accept="video/*">
+                  </div>
+
+                <div class="mt-3">
+                    <label for="subjects" class="form-label">Predmeti</label>
+                    <ng-container *ngIf="subjects$ | async as subjects">
+                        <select class="form-control" id="subjects" name="subjects" [(ngModel)]="selectedSubject">
+                            <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}</option>
+                        </select>
+                    </ng-container>
+                </div>
+
+                <div class="mt-3">
+                    <label for="levelOfEducations" class="form-label">Razina obrazovanja</label>
+                    <ng-container *ngIf="levelOfEducations$ | async as levelOfEducations">
+                        <select class="form-control" id="levelOfEducations" name="levelOfEducations" [(ngModel)]="selectedLevelOfEducation" (change)="selectedLevelOfEducation ? onLevelOfEducationChange(selectedLevelOfEducation) : null">
+                            <option *ngFor="let levelOfEducation of levelOfEducations" [value]="levelOfEducation.id">{{levelOfEducation.name}}</option>
+                        </select>
+                    </ng-container>
+                </div>
+
+                <div class="mt-3">
+                    <label for="underLevelOfEducations" class="form-label">Pod razina obrazovanja</label>
+                    <select class="form-control" id="underLevelOfEducations" name="underLevelOfEducations" [(ngModel)]="selectedUnderLevelOfEducation">
+                        <option *ngFor="let underLevelOfEducation of underLevelOfEducations" [value]="underLevelOfEducation.id">{{underLevelOfEducation.name}}</option>
+                    </select>
+                </div>
+
+                <div class="mt-3 d-flex">
+                    <button type="submit" class="btn btn-primary">Spremi</button>
+                    <button type="button" class="btn btn-danger ms-3" (click)="onDelete()">Izbriši</button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+    <ng-template #notFound>
+        <div class="alert alert-warning" role="alert">
+            Video nije pronađen!
+        </div>
+    </ng-template>
+
+</div>

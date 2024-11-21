@@ -1,0 +1,46 @@
+<div class="container">
+
+    <h1 class="mt-3">Videa</h1>
+
+    <div class="d-flex justify-content-end mt-3">
+        <a [routerLink]="['/admin/lekcije/dodaj']" class="btn btn-primary">Dodaj lekciju</a>
+    </div>
+
+    <ng-container *ngIf="lessons$ | async as lessons">
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Naslov</th>
+                    <th>Opis</th>
+                    <th>Video URL</th>
+                    <th>Video</th>
+                    <th>Predmet</th>
+                    <th>Razina Obrazovanja</th>
+                    <th>Pod Razina Obrazovanja</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let lesson of lessons">
+                    <td>{{lesson.id}}</td>
+                    <td>{{lesson.title}}</td>
+                    <td>{{lesson.description}}</td>
+                    <td>{{lesson.videoFileUrl}}</td>
+                    <td>
+                        <video *ngIf="lesson.videoFileUrl" [src]="lesson.videoFileUrl" controls width="200"></video>
+                    </td>
+                    <td>{{lesson.subject.name}}</td>
+                    <td>{{lesson.levelOfEducation.name}}</td>
+                    <td>{{lesson.underLevelOfEducation.name}}</td>
+                    <td>
+                        <a class="btn btn-light" [routerLink]="['/admin/lekcije', lesson.id]">Uredi</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </ng-container>
+
+</div>
